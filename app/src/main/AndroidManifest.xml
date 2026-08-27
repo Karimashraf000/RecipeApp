@@ -19,7 +19,7 @@
 
         <!-- AuthActivity handles Splash, Login and Register -->
         <activity
-            android:name=".AuthActivity"
+            android:name=".ui.auth.AuthActivity"
             android:exported="true">
 
             <!-- Make AuthActivity the first screen when the app starts -->

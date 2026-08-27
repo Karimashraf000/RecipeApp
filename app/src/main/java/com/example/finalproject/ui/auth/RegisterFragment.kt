@@ -1,11 +1,15 @@
-package com.example.finalproject
+package com.example.finalproject.ui.auth
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.finalproject.R
 
 class RegisterFragment : Fragment() {
 
@@ -24,27 +28,27 @@ class RegisterFragment : Fragment() {
         )
 
         // Get the Register button from the XML layout
-        val registerButton = view.findViewById<android.widget.Button>(
+        val registerButton = view.findViewById<Button>(
             R.id.registerButton
         )
 
         // Get the Login button from the XML layout
-        val loginButton = view.findViewById<android.widget.Button>(
+        val loginButton = view.findViewById<Button>(
             R.id.loginButton
         )
 
         // Get the Name input field
-        val nameEditText = view.findViewById<android.widget.EditText>(
+        val nameEditText = view.findViewById<EditText>(
             R.id.nameEditText
         )
 
         // Get the Email input field
-        val emailEditText = view.findViewById<android.widget.EditText>(
+        val emailEditText = view.findViewById<EditText>(
             R.id.emailEditText
         )
 
         // Get the Password input field
-        val passwordEditText = view.findViewById<android.widget.EditText>(
+        val passwordEditText = view.findViewById<EditText>(
             R.id.passwordEditText
         )
 
@@ -76,7 +80,7 @@ class RegisterFragment : Fragment() {
                 val sharedPreferences =
                     requireActivity().getSharedPreferences(
                         "RecipeAppPreferences",
-                        android.content.Context.MODE_PRIVATE
+                        Context.MODE_PRIVATE
                     )
 
                 // Save the user's name, email and password

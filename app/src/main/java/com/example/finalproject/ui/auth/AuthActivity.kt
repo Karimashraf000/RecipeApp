@@ -1,12 +1,17 @@
-package com.example.finalproject
+package com.example.finalproject.ui.auth
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.finalproject.ui.auth.LoginFragment
+import com.example.finalproject.R
+import com.example.finalproject.ui.auth.RegisterFragment
+import com.example.finalproject.ui.auth.SplashFragment
 
 class AuthActivity : AppCompatActivity() {
 
     // SharedPreferences is used to save the user's login status
-    private lateinit var sharedPreferences: android.content.SharedPreferences
+    private lateinit var sharedPreferences: SharedPreferences
 
     // This function runs when AuthActivity starts
     override fun onCreate(savedInstanceState: Bundle?) {

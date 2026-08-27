@@ -1,4 +1,4 @@
-package com.example.finalproject
+package com.example.finalproject.ui.auth
 
 import android.content.Context
 import android.content.Intent
@@ -10,6 +10,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.finalproject.MainActivity
+import com.example.finalproject.R
 
 class LoginFragment : Fragment() {
 
