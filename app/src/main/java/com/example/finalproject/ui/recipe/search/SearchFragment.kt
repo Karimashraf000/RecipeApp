@@ -10,7 +10,6 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.R
@@ -88,10 +87,19 @@ class SearchFragment : Fragment() {
                     meal.idMeal
                 )
 
-                findNavController().navigate(
-                    R.id.recipeDetailFragment,
-                    bundle
-                )
+                viewModel.meals.observe(viewLifecycleOwner) { meals ->
+
+                    val adapter = RecipeAdapter(meals) { meal ->
+
+                        val detailFragment = com.example.finalproject.ui.details.RecipeDetailFragment
+                            .newInstance(meal.idMeal)
+
+                        (requireActivity() as com.example.finalproject.ui.recipe.RecipeActivity)
+                            .openFragment(detailFragment, addToBackStack = true)
+                    }
+
+                    recyclerView.adapter = adapter
+                }
             }
 
             recyclerView.adapter = adapter
