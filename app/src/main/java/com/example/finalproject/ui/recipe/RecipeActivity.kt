@@ -6,12 +6,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.example.finalproject.R
 import com.example.finalproject.ui.auth.AuthActivity
-import com.example.finalproject.ui.recipe.favorite.FavoriteFragment
-import com.example.finalproject.ui.recipe.home.HomeFragment
-import com.example.finalproject.ui.recipe.search.SearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class RecipeActivity : AppCompatActivity() {
@@ -20,30 +18,14 @@ class RecipeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe)
 
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
         val bottomNavigation =
             findViewById<BottomNavigationView>(R.id.bottomNavigation)
 
-        if (savedInstanceState == null) {
-            openFragment(HomeFragment())
-        }
-
-        bottomNavigation.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.homeFragment -> {
-                    openFragment(HomeFragment())
-                    true
-                }
-                R.id.searchFragment -> {
-                    openFragment(SearchFragment())
-                    true
-                }
-                R.id.favoriteFragment -> {
-                    openFragment(FavoriteFragment())
-                    true
-                }
-                else -> false
-            }
-        }
+        bottomNavigation.setupWithNavController(navController)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -58,21 +40,13 @@ class RecipeActivity : AppCompatActivity() {
                 true
             }
             R.id.action_about -> {
-                openFragment(com.example.finalproject.ui.about.AboutFragment())
+                val navHostFragment =
+                    supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+                navHostFragment.navController.navigate(R.id.aboutFragment)
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    // بتفتح فراجمنت جديد فوق الـ container، مع دعم زر الرجوع لصفحة التفاصيل
-    fun openFragment(fragment: Fragment, addToBackStack: Boolean = false) {
-        val transaction = supportFragmentManager.beginTransaction()
-            .replace(R.id.recipeContainer, fragment)
-
-        if (addToBackStack) transaction.addToBackStack(null)
-
-        transaction.commit()
     }
 
     private fun signOut() {

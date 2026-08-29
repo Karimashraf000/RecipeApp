@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.finalproject.data.model.Meal
 import com.example.finalproject.data.remote.RetrofitInstance
-import com.example.finalproject.model.Meal
 import kotlinx.coroutines.launch
 
 class SearchViewModel : ViewModel() {
@@ -17,29 +17,26 @@ class SearchViewModel : ViewModel() {
     val loading: LiveData<Boolean> = _loading
 
     fun searchRecipes(query: String) {
-
         if (query.isBlank()) {
             _meals.value = emptyList()
             return
         }
 
         viewModelScope.launch {
-
             try {
-
                 _loading.value = true
 
-                val response =
-                    RetrofitInstance.api.searchMeals(query)
+                val response = RetrofitInstance.api.getMeals(query)
 
-                _meals.value = response.meals ?: emptyList()
+                _meals.value = if (response.isSuccessful) {
+                    response.body()?.meals ?: emptyList()
+                } else {
+                    emptyList()
+                }
 
             } catch (e: Exception) {
-
                 _meals.value = emptyList()
-
             } finally {
-
                 _loading.value = false
             }
         }
