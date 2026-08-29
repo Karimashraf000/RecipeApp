@@ -10,6 +10,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.R
@@ -80,7 +81,6 @@ class SearchFragment : Fragment() {
 
             val adapter = RecipeAdapter(meals) { meal ->
 
-                // Navigation to RecipeDetailFragment
                 val bundle = Bundle()
 
                 bundle.putString(
@@ -88,14 +88,10 @@ class SearchFragment : Fragment() {
                     meal.idMeal
                 )
 
-                parentFragmentManager
-                    .beginTransaction()
-                    .replace(
-                        R.id.recipeContainer,
-                        com.example.finalproject.ui.recipe.details.RecipeDetailFragment()
-                    )
-                    .addToBackStack(null)
-                    .commit()
+                findNavController().navigate(
+                    R.id.recipeDetailFragment,
+                    bundle
+                )
             }
 
             recyclerView.adapter = adapter
