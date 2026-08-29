@@ -10,7 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.finalproject.MainActivity
+import com.example.finalproject.ui.recipe.RecipeActivity
 import com.example.finalproject.R
 
 class LoginFragment : Fragment() {
@@ -107,7 +107,7 @@ class LoginFragment : Fragment() {
                     // Create an Intent to open MainActivity
                     val intent = Intent(
                         requireContext(),
-                        MainActivity::class.java
+                        RecipeActivity::class.java
                     )
 
                     // Start the MainActivity
