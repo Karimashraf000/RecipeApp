@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.finalproject.R
@@ -18,6 +19,9 @@ class RecipeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe)
 
+        val toolbar = findViewById<Toolbar>(R.id.recipeToolbar)
+        setSupportActionBar(toolbar)
+
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         val navController = navHostFragment.navController
@@ -25,7 +29,33 @@ class RecipeActivity : AppCompatActivity() {
         val bottomNavigation =
             findViewById<BottomNavigationView>(R.id.bottomNavigation)
 
-        bottomNavigation.setupWithNavController(navController)
+        bottomNavigation.setOnItemSelectedListener { item ->
+
+            val navOptions = androidx.navigation.NavOptions.Builder()
+                .setPopUpTo(navController.graph.startDestinationId, false)
+                .setLaunchSingleTop(true)
+                .build()
+
+            when (item.itemId) {
+
+                R.id.homeFragment -> {
+                    navController.navigate(R.id.homeFragment, null, navOptions)
+                    true
+                }
+
+                R.id.searchFragment -> {
+                    navController.navigate(R.id.searchFragment, null, navOptions)
+                    true
+                }
+
+                R.id.favoriteFragment -> {
+                    navController.navigate(R.id.favoriteFragment, null, navOptions)
+                    true
+                }
+
+                else -> false
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -48,7 +48,9 @@ class SearchFragment : Fragment() {
         recyclerView.adapter = recipeAdapter
 
         searchButton.setOnClickListener {
-            val query = searchEditText.text.toString().trim()
+
+            val query =
+                searchEditText.text.toString().trim().lowercase()
 
             if (query.isEmpty()) {
                 Toast.makeText(requireContext(), "Enter a recipe name", Toast.LENGTH_SHORT).show()

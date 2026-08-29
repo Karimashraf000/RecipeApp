@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.finalproject.R
 import com.example.finalproject.data.model.Meal
+import android.webkit.CookieManager
 
 class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_details) {
 
@@ -130,22 +131,33 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_details) {
         videoContainer.visibility = View.VISIBLE
 
         videoWebView.settings.javaScriptEnabled = true
+        videoWebView.settings.domStorageEnabled = true
         videoWebView.settings.mediaPlaybackRequiresUserGesture = false
+        videoWebView.settings.loadWithOverviewMode = true
+        videoWebView.settings.useWideViewPort = true
+
+        // مهم: يخلي يوتيوب يتعامل مع الـ WebView زي متصفح Chrome عادي
+        videoWebView.settings.userAgentString =
+            "Mozilla/5.0 (Linux; Android 13; Pixel 6) AppleWebKit/537.36 " +
+                    "(KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36"
+
+        CookieManager.getInstance().setAcceptThirdPartyCookies(videoWebView, true)
 
         val html = """
-            <html>
-            <body style="margin:0;padding:0;">
-            <iframe width="100%" height="100%"
-                src="$embedUrl?autoplay=1"
-                frameborder="0"
-                allow="autoplay; encrypted-media"
-                allowfullscreen></iframe>
-            </body>
-            </html>
-        """.trimIndent()
+        <html>
+        <body style="margin:0;padding:0;">
+        <iframe width="100%" height="100%"
+            src="$embedUrl?autoplay=1&playsinline=1&origin=https://www.youtube.com"
+            frameborder="0"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="autoplay; encrypted-media"
+            allowfullscreen></iframe>
+        </body>
+        </html>
+    """.trimIndent()
 
         videoWebView.loadDataWithBaseURL(
-            "https://www.youtube.com",
+            "https://www.youtube-nocookie.com",
             html,
             "text/html",
             "utf-8",
@@ -174,7 +186,7 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_details) {
         }
 
         return if (videoId.isNullOrBlank()) null
-        else "https://www.youtube.com/embed/$videoId"
+        else "https://www.youtube-nocookie.com/embed/$videoId"
     }
 
     override fun onDestroyView() {
