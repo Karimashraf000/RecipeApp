@@ -48,7 +48,7 @@ Project Structure
 │           │       │   │   │   ├── HomeFragment.kt
 │           │       │   │   │   ├── HomeViewModel.kt
 │           │       │   │   │   └── RecipeAdapter.kt
-│           │       │   │   │
+|           |
 │           │       │   │   ├── search/
 │           │       │   │   │   ├── SearchFragment.kt
 │           │       │   │   │   └── SearchViewModel.kt

@@ -2,7 +2,7 @@
 
 <!-- Main configuration file for the Android application -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <uses-permission android:name="android.permission.INTERNET"/>
     <!-- Application configuration -->
     <application
         android:allowBackup="true"
@@ -34,6 +34,11 @@
             </intent-filter>
 
         </activity>
+
+        <!-- RecipeActivity hosts the Home and Recipe Detail screens -->
+        <activity
+            android:name=".ui.recipe.RecipeActivity"
+            android:exported="false" />
 
     </application>
 
