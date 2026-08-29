@@ -8,8 +8,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.R
@@ -19,97 +21,48 @@ class SearchFragment : Fragment() {
 
     private val viewModel: SearchViewModel by viewModels()
 
+    private lateinit var recipeAdapter: RecipeAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        return inflater.inflate(
-            R.layout.fragment_search,
-            container,
-            false
-        )
+        return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?
-    ) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val searchEditText =
-            view.findViewById<EditText>(R.id.searchEditText)
+        val searchEditText = view.findViewById<EditText>(R.id.searchEditText)
+        val searchButton = view.findViewById<Button>(R.id.searchButton)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.searchRecyclerView)
+        val progressBar = view.findViewById<ProgressBar>(R.id.searchProgressBar)
 
-        val searchButton =
-            view.findViewById<Button>(R.id.searchButton)
+        recipeAdapter = RecipeAdapter { meal ->
+            val bundle = bundleOf("mealId" to meal.idMeal)
+            findNavController().navigate(R.id.action_search_to_detail, bundle)
+        }
 
-        val recyclerView =
-            view.findViewById<RecyclerView>(
-                R.id.searchRecyclerView
-            )
-
-        val progressBar =
-            view.findViewById<ProgressBar>(
-                R.id.searchProgressBar
-            )
-
-        recyclerView.layoutManager =
-            LinearLayoutManager(requireContext())
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = recipeAdapter
 
         searchButton.setOnClickListener {
-
-            val query =
-                searchEditText.text.toString().trim()
+            val query = searchEditText.text.toString().trim()
 
             if (query.isEmpty()) {
-
-                Toast.makeText(
-                    requireContext(),
-                    "Enter a recipe name",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+                Toast.makeText(requireContext(), "Enter a recipe name", Toast.LENGTH_SHORT).show()
             } else {
-
                 viewModel.searchRecipes(query)
             }
         }
 
         viewModel.meals.observe(viewLifecycleOwner) { meals ->
-
-            val adapter = RecipeAdapter(meals) { meal ->
-
-                val bundle = Bundle()
-
-                bundle.putString(
-                    "mealId",
-                    meal.idMeal
-                )
-
-                viewModel.meals.observe(viewLifecycleOwner) { meals ->
-
-                    val adapter = RecipeAdapter(meals) { meal ->
-
-                        val detailFragment = com.example.finalproject.ui.details.RecipeDetailFragment
-                            .newInstance(meal.idMeal)
-
-                        (requireActivity() as com.example.finalproject.ui.recipe.RecipeActivity)
-                            .openFragment(detailFragment, addToBackStack = true)
-                    }
-
-                    recyclerView.adapter = adapter
-                }
-            }
-
-            recyclerView.adapter = adapter
+            recipeAdapter.setRecipes(meals)
         }
 
         viewModel.loading.observe(viewLifecycleOwner) { loading ->
-
-            progressBar.visibility =
-                if (loading) View.VISIBLE
-                else View.GONE
+            progressBar.visibility = if (loading) View.VISIBLE else View.GONE
         }
     }
 }

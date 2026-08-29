@@ -83,6 +83,27 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="20dp"/>
 
+            <FrameLayout
+                android:id="@+id/videoContainer"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="gone">
+
+                <WebView
+                    android:id="@+id/videoWebView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <Button
+                    android:id="@+id/closeVideoButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:text="X" />
+
+            </FrameLayout>
+
         </LinearLayout>
 
     </LinearLayout>
