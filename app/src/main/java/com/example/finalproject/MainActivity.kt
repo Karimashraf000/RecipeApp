@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.example.finalproject.ui.recipe.RecipeActivity
+//import com.example.finalproject.ui.recipe.RecipeActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewRecipesButton.setOnClickListener {
-            startActivity(Intent(this, RecipeActivity::class.java))
+//            startActivity(Intent(this, RecipeActivity::class.java))
         }
 
         logoutButton.setOnClickListener {

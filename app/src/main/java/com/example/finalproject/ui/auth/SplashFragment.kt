@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.finalproject.ui.recipe.RecipeActivity
+//import com.example.finalproject.ui.recipe.RecipeActivity
 import com.example.finalproject.R
 
 class SplashFragment : Fragment() {
@@ -54,7 +54,7 @@ class SplashFragment : Fragment() {
                 // open the MainActivity directly
                 val intent = Intent(
                     requireContext(),
-                    RecipeActivity::class.java
+//                    RecipeActivity::class.java
                 )
 
                 startActivity(intent)
