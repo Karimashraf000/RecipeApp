@@ -1,47 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!-- Main configuration file for the Android application -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET"/>
 
-
-    <!-- Application configuration -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Final Project"
+        android:label="Recipe app"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProject">
 
-        <!-- MainActivity is the screen shown after successful login -->
         <activity
             android:name=".MainActivity"
             android:exported="false" />
 
-        <!-- AuthActivity handles Splash, Login and Register -->
         <activity
             android:name=".ui.auth.AuthActivity"
             android:exported="true">
-
-            <!-- Make AuthActivity the first screen when the app starts -->
             <intent-filter>
-
-                <!-- Start the application -->
                 <action android:name="android.intent.action.MAIN" />
-
-                <!-- Show this Activity when the app launches -->
                 <category android:name="android.intent.category.LAUNCHER" />
-
             </intent-filter>
-
         </activity>
 
-        <!-- RecipeActivity hosts the Home and Recipe Detail screens -->
         <activity
             android:name=".ui.recipe.RecipeActivity"
             android:exported="false" />
 
     </application>
-
 </manifest>

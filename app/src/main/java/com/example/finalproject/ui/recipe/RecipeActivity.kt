@@ -6,12 +6,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.example.finalproject.R
 import com.example.finalproject.ui.auth.AuthActivity
-import com.example.finalproject.ui.recipe.favorite.FavoriteFragment
-import com.example.finalproject.ui.recipe.home.HomeFragment
-import com.example.finalproject.ui.recipe.search.SearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class RecipeActivity : AppCompatActivity() {
@@ -20,27 +19,40 @@ class RecipeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe)
 
+        val toolbar = findViewById<Toolbar>(R.id.recipeToolbar)
+        setSupportActionBar(toolbar)
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
         val bottomNavigation =
             findViewById<BottomNavigationView>(R.id.bottomNavigation)
 
-        if (savedInstanceState == null) {
-            openFragment(HomeFragment())
-        }
-
         bottomNavigation.setOnItemSelectedListener { item ->
+
+            val navOptions = androidx.navigation.NavOptions.Builder()
+                .setPopUpTo(navController.graph.startDestinationId, false)
+                .setLaunchSingleTop(true)
+                .build()
+
             when (item.itemId) {
+
                 R.id.homeFragment -> {
-                    openFragment(HomeFragment())
+                    navController.navigate(R.id.homeFragment, null, navOptions)
                     true
                 }
+
                 R.id.searchFragment -> {
-                    openFragment(SearchFragment())
+                    navController.navigate(R.id.searchFragment, null, navOptions)
                     true
                 }
+
                 R.id.favoriteFragment -> {
-                    openFragment(FavoriteFragment())
+                    navController.navigate(R.id.favoriteFragment, null, navOptions)
                     true
                 }
+
                 else -> false
             }
         }
@@ -58,21 +70,13 @@ class RecipeActivity : AppCompatActivity() {
                 true
             }
             R.id.action_about -> {
-                openFragment(com.example.finalproject.ui.about.AboutFragment())
+                val navHostFragment =
+                    supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+                navHostFragment.navController.navigate(R.id.aboutFragment)
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    // بتفتح فراجمنت جديد فوق الـ container، مع دعم زر الرجوع لصفحة التفاصيل
-    fun openFragment(fragment: Fragment, addToBackStack: Boolean = false) {
-        val transaction = supportFragmentManager.beginTransaction()
-            .replace(R.id.recipeContainer, fragment)
-
-        if (addToBackStack) transaction.addToBackStack(null)
-
-        transaction.commit()
     }
 
     private fun signOut() {

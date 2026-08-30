@@ -10,17 +10,37 @@
         android:name="com.example.finalproject.ui.recipe.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home">
-
         <action
             android:id="@+id/action_home_to_detail"
             app:destination="@id/recipeDetailFragment" />
-
     </fragment>
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.finalproject.ui.recipe.search.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_search_to_detail"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.example.finalproject.ui.recipe.favorite.FavoriteFragment"
+        android:label="Favorites"
+        tools:layout="@layout/fragment_favorite" />
 
     <fragment
         android:id="@+id/recipeDetailFragment"
         android:name="com.example.finalproject.ui.recipe.details.RecipeDetailFragment"
         android:label="Recipe Detail"
         tools:layout="@layout/fragment_recipe_details" />
+
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.finalproject.ui.about.AboutFragment"
+        android:label="About"
+        tools:layout="@layout/fragment_about" />
 
 </navigation>
