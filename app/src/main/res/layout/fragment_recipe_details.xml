@@ -77,11 +77,12 @@
                 android:id="@+id/watchVideoButton"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:text="▶  Watch Recipe"
-                android:textSize="17sp"
-                android:textColor="@android:color/white"
                 android:layout_marginTop="40dp"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/primary"
+                android:text="▶  Watch Recipe"
+                android:textColor="@android:color/white"
+                android:textSize="17sp" />
 
             <FrameLayout
                 android:id="@+id/videoContainer"

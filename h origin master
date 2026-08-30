@@ -1,0 +1,11 @@
+*   [33m1b005bb[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m Resolve merge conflicts
+[31m|[m[32m\[m  
+[31m|[m * [33m2976328[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m i edited in login and splash fragments
+[31m|[m * [33mcf1b5cd[m i added part of navigation integration
+[31m|[m * [33m906f058[m i added part of video window
+[31m|[m * [33mab1ac5a[m  i addedm AboutFragment.kt and its xml
+[31m|[m * [33m0f7ac73[m  i edited SearchFragment.kt
+[31m|[m * [33mf21dcfe[m i made meun receipe , receipe activity
+[31m|[m * [33maaab1ac[m i added meun bottom nvagiation , SearchFragment.kt
+[31m|[m * [33m74ef3b4[m i made recycle view
+[31m|[m * [33mb78200b[m i added code for search (service and model meal)
