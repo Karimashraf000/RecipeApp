@@ -73,6 +73,7 @@ class SearchFragment : Fragment() {
 
         viewModel.meals.observe(viewLifecycleOwner) { meals ->
             recipeAdapter.setRecipes(meals)
+            loadFavoriteIds()
         }
 
         viewModel.loading.observe(viewLifecycleOwner) { loading ->
@@ -85,14 +86,20 @@ class SearchFragment : Fragment() {
             loadFavoriteIds()
         }
     }
+    private fun getCurrentUserEmail(): String {
+        val prefs = requireContext().getSharedPreferences(
+            "RecipeAppPreferences",
+            android.content.Context.MODE_PRIVATE
+        )
+        return prefs.getString("currentUserEmail", "") ?: ""
+    }
     private fun toggleFavorite(meal: Meal, icon: ImageView) {
         val dao = AppDatabase.getDatabase(requireContext()).favoriteDao()
-
+        val userEmail = getCurrentUserEmail()
         lifecycleScope.launch(Dispatchers.IO) {
-            val isFavorite = dao.getAll().any { it.mealId == meal.idMeal }
-
+            val isFavorite = dao.getAll(userEmail).any { it.mealId == meal.idMeal }
             if (isFavorite) {
-                val favorite = dao.getAll().first { it.mealId == meal.idMeal }
+                val favorite = dao.getAll(userEmail).first { it.mealId == meal.idMeal }
                 dao.delete(favorite)
             } else {
                 dao.insertAll(
@@ -100,7 +107,8 @@ class SearchFragment : Fragment() {
                         FavoriteRecipe(
                             mealId = meal.idMeal ?: "",
                             mealName = meal.strMeal ?: "",
-                            mealThumb = meal.strMealThumb ?: ""
+                            mealThumb = meal.strMealThumb ?: "",
+                            userEmail = userEmail
                         )
                     )
                 )
@@ -118,9 +126,9 @@ class SearchFragment : Fragment() {
 
     private fun loadFavoriteIds() {
         val dao = AppDatabase.getDatabase(requireContext()).favoriteDao()
-
+        val userEmail = getCurrentUserEmail()
         lifecycleScope.launch(Dispatchers.IO) {
-            val ids = dao.getAll().map { it.mealId }.toSet()
+            val ids = dao.getAll(userEmail).map { it.mealId }.toSet()
 
             withContext(Dispatchers.Main) {
                 recipeAdapter.setFavoriteIds(ids)

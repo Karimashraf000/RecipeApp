@@ -9,5 +9,6 @@ data class FavoriteRecipe(
     val id: Int = 0,
     val mealId: String,
     val mealName: String,
-    val mealThumb: String
+    val mealThumb: String,
+    val userEmail: String
 )

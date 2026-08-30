@@ -7,8 +7,8 @@ import androidx.room.Query
 import androidx.room.Update
 @Dao
 interface FavoriteDao {
-    @Query("SELECT * FROM favoriteRecipes")
-    fun getAll(): List<FavoriteRecipe>
+    @Query("SELECT * FROM favoriteRecipes WHERE userEmail = :userEmail")
+    fun getAll(userEmail: String): List<FavoriteRecipe>
 
     @Insert
     fun insertAll(favoriteRecipes: List<FavoriteRecipe>)

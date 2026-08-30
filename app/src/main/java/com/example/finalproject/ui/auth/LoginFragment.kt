@@ -77,24 +77,23 @@ class LoginFragment : Fragment() {
                         Context.MODE_PRIVATE
                     )
 
-                // Read the saved email
-                val savedEmail = sharedPreferences.getString(
-                    "email",
-                    ""
+                // Read the saved password for this specific email
+                val savedPassword = sharedPreferences.getString(
+                    "password_$email",
+                    null
                 )
 
-                // Read the saved password
-                val savedPassword = sharedPreferences.getString(
-                    "password",
-                    ""
-                )
+                // Check if the entered password matches the saved password
+                // for this email (savedPassword is null if no account with
+                // this email was ever registered)
 
                 // Check if the entered data matches the saved data
-                if (email == savedEmail && password == savedPassword) {
+                if (savedPassword != null && password == savedPassword) {
 
                     // Save login state
                     sharedPreferences.edit()
                         .putBoolean("isLoggedIn", true)
+                        .putString("currentUserEmail", email)
                         .apply()
 
                     // Show a successful login message
