@@ -29,8 +29,11 @@
         android:id="@+id/favoriteFragment"
         android:name="com.example.finalproject.ui.recipe.favorite.FavoriteFragment"
         android:label="Favorites"
-        tools:layout="@layout/fragment_favorite" />
-
+        tools:layout="@layout/fragment_favorite">
+        <action
+            android:id="@+id/action_favorite_to_detail"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/recipeDetailFragment"
         android:name="com.example.finalproject.ui.recipe.details.RecipeDetailFragment"
