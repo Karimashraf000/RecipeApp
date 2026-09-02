@@ -83,25 +83,46 @@ class RegisterFragment : Fragment() {
                         Context.MODE_PRIVATE
                     )
 
-                // Save the user's name, email and password
-                sharedPreferences.edit()
-                    .putString("name", name)
-                    .putString("email", email)
-                    .putString("password", password)
-                    .apply()
+                // Read the set of already-registered emails (copy it, sets from
+                // SharedPreferences must not be modified directly)
+                val registeredEmails = HashSet(
+                    sharedPreferences.getStringSet("registeredEmails", emptySet()) ?: emptySet()
+                )
 
-                // Show a success message
-                Toast.makeText(
-                    requireContext(),
-                    "Account created successfully",
-                    Toast.LENGTH_SHORT
-                ).show()
+                if (registeredEmails.contains(email)) {
 
-                // Go to the Login screen after registration
-                (activity as AuthActivity).showLogin()
+                    // Don't overwrite an existing account
+                    Toast.makeText(
+                        requireContext(),
+                        "An account with this email already exists",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                } else {
+
+                    // Add this email to the set of registered accounts
+                    registeredEmails.add(email)
+
+                    // Save the new account under email-specific keys, plus the
+                    // updated set of all registered emails
+                    sharedPreferences.edit()
+                        .putStringSet("registeredEmails", registeredEmails)
+                        .putString("name_$email", name)
+                        .putString("password_$email", password)
+                        .apply()
+
+                    // Show a success message
+                    Toast.makeText(
+                        requireContext(),
+                        "Account created successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    // Go to the Login screen after registration
+                    (activity as AuthActivity).showLogin()
+                }
             }
         }
-
         // When the Login button is clicked
         loginButton.setOnClickListener {
 

@@ -57,10 +57,19 @@ class FavoriteFragment : Fragment() {
             loadFavorites()
         }
     }
+    private fun getCurrentUserEmail(): String {
+        val prefs = requireContext().getSharedPreferences(
+            "RecipeAppPreferences",
+            android.content.Context.MODE_PRIVATE
+        )
+        return prefs.getString("currentUserEmail", "") ?: ""
+    }
+
     private fun loadFavorites() {
         val dao = AppDatabase.getDatabase(requireContext()).favoriteDao()
+        val userEmail = getCurrentUserEmail()
         lifecycleScope.launch(Dispatchers.IO) {
-            val favorites = dao.getAll()
+            val favorites =  dao.getAll(userEmail)
             withContext(Dispatchers.Main) {
                 favoriteList.clear()
                 favoriteList.addAll(favorites)
