@@ -118,7 +118,7 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_details) {
         }
     }
 
-    // بتفتح نافذة الفيديو جوه الشاشة (Overlay) بدل ما تفتح يوتيوب برا التطبيق
+
     private fun showVideo(youtubeUrl: String) {
 
         val embedUrl = toYoutubeEmbedUrl(youtubeUrl)
@@ -136,7 +136,6 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_details) {
         videoWebView.settings.loadWithOverviewMode = true
         videoWebView.settings.useWideViewPort = true
 
-        // مهم: يخلي يوتيوب يتعامل مع الـ WebView زي متصفح Chrome عادي
         videoWebView.settings.userAgentString =
             "Mozilla/5.0 (Linux; Android 13; Pixel 6) AppleWebKit/537.36 " +
                     "(KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36"
@@ -170,7 +169,6 @@ class RecipeDetailFragment : Fragment(R.layout.fragment_recipe_details) {
         videoContainer.visibility = View.GONE
     }
 
-    // بتاخد أي شكل لينك يوتيوب وترجع رابط embed، أو null لو الفورمات مش معروف
     private fun toYoutubeEmbedUrl(url: String): String? {
         val videoId = when {
             url.contains("youtu.be/") ->

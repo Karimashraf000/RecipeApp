@@ -14,7 +14,6 @@
         android:gravity="center_horizontal"
         android:padding="24dp">
 
-        <!-- Recipe App Logo -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,6 +66,8 @@
                 android:hint="Enter your email"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"
                 android:background="#FFF3E7"
                 android:inputType="textEmailAddress"/>
 
@@ -88,12 +89,12 @@
                 android:layout_height="52dp"
                 android:hint="Enter your password"
                 android:paddingStart="16dp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"
                 android:paddingEnd="16dp"
                 android:background="#FFF3E7"
                 android:inputType="textPassword"/>
 
-
-            <!-- Login Button -->
             <Button
                 android:id="@+id/loginButton"
                 android:layout_width="match_parent"
